@@ -9,6 +9,7 @@
     <version>1.0</version>
 
     <build>
+        <!--suppress UnresolvedMavenProperty -->
         <finalName>${project.artifactId}-${project.version}-${git.commit.id.abbrev}</finalName>
         <plugins>
             <plugin>
@@ -25,7 +26,13 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
+                    <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                    <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
+                    <includeOnlyProperties>
+                        <includeOnlyProperty>^git.build.(time|version)$</includeOnlyProperty>
+                        <includeOnlyProperty>^git.commit.id.(abbrev|full)$</includeOnlyProperty>
+                    </includeOnlyProperties>
+                    <commitIdGenerationMode>full</commitIdGenerationMode>
                     <injectAllReactorProjects>true</injectAllReactorProjects>
                 </configuration>
             </plugin>
